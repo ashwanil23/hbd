@@ -44,12 +44,36 @@ export default function BirthdayWebsite() {
     return () => clearInterval(timer);
   }, []);
 
-  const handleSubmitWish = () => {
+  // Fetch existing wishes from backend when the site loads
+  useEffect(() => {
+    fetch("http://localhost:5000/wishes")
+        .then((res) => res.json())
+        .then((data) => setWishes(data))
+        .catch((err) => console.error("Error fetching wishes:", err));
+  }, []);
+
+  const handleSubmitWish = async () => {
     if (newWish.name && newWish.message) {
-      setWishes([...wishes, { ...newWish, id: Date.now() }]);
-      setNewWish({ name: '', message: '' });
-      setShowWishForm(false);
-      triggerConfetti();
+      try {
+        // Send new wish to backend
+        await fetch("http://localhost:5000/wishes", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(newWish),
+        });
+
+        // Fetch updated list of wishes
+        const res = await fetch("http://localhost:5000/wishes");
+        const data = await res.json();
+        setWishes(data);
+
+        // Reset form and close modal
+        setNewWish({ name: '', message: '' });
+        setShowWishForm(false);
+        triggerConfetti();
+      } catch (err) {
+        console.error("Error saving wish:", err);
+      }
     }
   };
 
