@@ -44,9 +44,9 @@ export default function BirthdayWebsite() {
     return () => clearInterval(timer);
   }, []);
 
-  // Fetch existing wishes from backend when the site loads
+// Fetch existing wishes from backend
   useEffect(() => {
-    fetch("http://localhost:5000/wishes")
+    fetch(`${process.env.REACT_APP_API_BASE_URL}/wishes`)
         .then((res) => res.json())
         .then((data) => setWishes(data))
         .catch((err) => console.error("Error fetching wishes:", err));
@@ -55,19 +55,16 @@ export default function BirthdayWebsite() {
   const handleSubmitWish = async () => {
     if (newWish.name && newWish.message) {
       try {
-        // Send new wish to backend
-        await fetch("http://localhost:5000/wishes", {
+        await fetch(`${process.env.REACT_APP_API_BASE_URL}/wishes`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(newWish),
         });
 
-        // Fetch updated list of wishes
-        const res = await fetch("http://localhost:5000/wishes");
+        const res = await fetch(`${process.env.REACT_APP_API_BASE_URL}/wishes`);
         const data = await res.json();
         setWishes(data);
 
-        // Reset form and close modal
         setNewWish({ name: '', message: '' });
         setShowWishForm(false);
         triggerConfetti();
