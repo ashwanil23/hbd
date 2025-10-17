@@ -16,7 +16,7 @@ export default function BirthdayWebsite() {
 
   // Sample photos - Replace with actual image URLs
   const photos = [
-    { url: 'https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=800', caption: 'Amazing memories!' },
+    { url: 'https://drive.google.com/drive/u/4/folders/1nMdFTf_q6XL6msCibEnxaMCYN3_dAwJJ', caption: 'Amazing memories!' },
     { url: 'https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?w=800', caption: 'Fun times together' },
     { url: 'https://images.unsplash.com/photo-1513151233558-d860c5398176?w=800', caption: 'Unforgettable moments' },
     { url: 'https://images.unsplash.com/photo-1531956531700-e4b9e30b6e1b?w=800', caption: 'Best friends forever' },
